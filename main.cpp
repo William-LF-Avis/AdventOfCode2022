@@ -1,4 +1,4 @@
-#include "myFilepath.h"     // defines project path
+#include "myFilepath.h"     // defines project path in separate header
 #include "Day1/CalorieCounting.h"
 #include "Day2/RockPaperScissors.h"
 #include "Day3/RucksackReorganisation.h"
@@ -7,24 +7,25 @@
 
 int main() {
 
-	const std::string PROJECTDIR = "Enter your project directory here.";
-
+	const std::string ProjectDirectory = "Enter your project directory here.";
 	// remove namespace myFilepath
-	const std::string INPUTDIR = myFilepath::PROJECTDIR + R"(TaskInputs\)";
+	const std::string InputDirectory = myFilepath::ProjectDirectory + R"(TaskInputs\)";
 
-	Day1::runTasks(INPUTDIR + "day1.txt");
+	Day1::runTasks(InputDirectory + "day1.txt");
 	std::cout << '\n';
 
-	Day2::runTasks(INPUTDIR + "day2.txt");
+	Day2::runTasks(InputDirectory + "day2.txt");
 
-	Day3::Task1(INPUTDIR + "day3.txt");
-	Day3::Task2(INPUTDIR + "day3.txt");
+	Day3::Task1(InputDirectory + "day3.txt");
+	Day3::Task2(InputDirectory + "day3.txt");
 
-	Day4::Task1(INPUTDIR + "day4.txt");
-	Day4::Task2(INPUTDIR + "day4.txt");
+	Day4::Task1(InputDirectory + "day4.txt");
+	Day4::Task2(InputDirectory + "day4.txt");
 
-	Day5::runTasks(INPUTDIR + "day5_start.txt", INPUTDIR + "day5_procedure.txt");
+	Day5::runTasks(
+		InputDirectory + "day5_start.txt",
+		InputDirectory + "day5_procedure.txt"
+	);
 
 	return 0;
 }
-
