@@ -58,13 +58,13 @@ public:
 		if (numberOfCrates > supplyStacks[fromStack - 1].size()) {
 			std::cout << "Error: Cannot move " << numberOfCrates << " crates from stack " << fromStack
 			          << " because it only contains " << supplyStacks[fromStack - 1].size() << " crates"
-			          << std::endl;
+			          << '\n';
 			return false;
 		} else if (fromStack < 1 or fromStack > supplyStacks.size()) {
-			std::cout << "Error: Stack " + std::to_string(fromStack) + " is out of range" << std::endl;
+			std::cout << "Error: Stack " + std::to_string(fromStack) + " is out of range" << '\n';
 			return false;
 		} else if (toStack < 1 or toStack > supplyStacks.size()) {
-			std::cout << "Error: Stack " + std::to_string(toStack) + " is out of range" << std::endl;
+			std::cout << "Error: Stack " + std::to_string(toStack) + " is out of range" << '\n';
 			return false;
 		}
 		return true;
@@ -124,10 +124,10 @@ public:
 
 		SupplyStacks supplyStack1(start), supplyStack2 = supplyStack1;
 
-		std::cout << "\n Day 5 - Supply Stacks - Task 1 and 2 \n" << std::endl
-		          << "--------------------------------------- \n"    << std::endl;
+		std::cout << "\n Day 5 - Supply Stacks - Task 1 and 2 \n"
+		          << "--------------------------------------- \n";
 
-		std::cout << supplyStack1.StackToString();
+		std::cout << supplyStack1.StackToString() << '\n';
 
 		size_t cnt = 0, from = 0, to = 0;
 		std::string line;
@@ -137,24 +137,22 @@ public:
 		while (getline(in, line)) {
 			sscanf_s(line.c_str(), "move %d from %d to %d", &cnt, &from, &to);
 
-			if (supplyStack1.isMoveValid(cnt, from, to)) {
+			if (supplyStack1.isMoveValid(cnt, from, to))
 				supplyStack1.moveCratesIndividually(cnt, from, to);
-				std::cout << "Move " << moveNo << ": Task 1: ";
-				std::cout << supplyStack1.TopStackToString();
-			}
 			else
 				return -1;
 
-			if (supplyStack2.isMoveValid(cnt, from, to)) {
+			if (supplyStack2.isMoveValid(cnt, from, to))
 				supplyStack2.moveCratesByBlock(cnt, from, to);
-				std::cout << "          Task 2: ";
-				std::cout << supplyStack2.TopStackToString();
-			}
 			else
 				return -2;
 
 			++moveNo;
 		}
+		std::cout << "After " << moveNo << " moves task 1 configures the stack into: \n"
+		          << supplyStack1.TopStackToString() << '\n';
+		std::cout << "After " << moveNo << " moves task 2 configures the stack into: \n"
+		          << supplyStack2.TopStackToString() << '\n';
 		return 0;
 	}
 
