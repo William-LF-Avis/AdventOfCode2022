@@ -11,4 +11,4 @@ add_executable( AdventOfCode2022
         Day3/RucksackReorganisation.h
         Day4/CampCleanup.h
         Day5/SupplyStacks.h
-)
+        Day6/TuningTrouble.h)

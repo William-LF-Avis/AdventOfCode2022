@@ -4,6 +4,7 @@
 #include "Day3/RucksackReorganisation.h"
 #include "Day4/CampCleanup.h"
 #include "Day5/SupplyStacks.h"
+#include "Day6/TuningTrouble.h"
 
 int main() {
 
@@ -26,6 +27,8 @@ int main() {
 		InputDirectory + "day5_start.txt",
 		InputDirectory + "day5_procedure.txt"
 	);
+
+	Day6::runTasks(InputDirectory + "day6.txt");
 
 	return 0;
 }
