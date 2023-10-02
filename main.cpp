@@ -23,9 +23,12 @@ int main() {
 	Day4::Task1(InputDirectory + "day4.txt");
 	Day4::Task2(InputDirectory + "day4.txt");
 
+
+	std::cout << "\n Day 5 - Supply Stacks - Task 1 and 2 \n"
+	          << "-------------------------------------- \n";
 	Day5::runTasks(
-		InputDirectory + "day5_start.txt",
-		InputDirectory + "day5_procedure.txt"
+			InputDirectory + "day5_configuration.txt",
+			 InputDirectory + "day5_instructions.txt"
 	);
 
 	Day6::runTasks(InputDirectory + "day6.txt");
