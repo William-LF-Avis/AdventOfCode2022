@@ -11,50 +11,37 @@
 #include <cmath>
 
 
+namespace day6 {
 
-class Day6 {
-
-private:
-	static bool isUnique(const std::deque<char> &container) {
-
-		for (auto it1 = container.begin(); it1 != container.end(); ++it1) {
-			for (auto it2 = it1 + 1; it2 != container.end(); ++it2)
+	static bool containsUniqueElements(const std::deque<char> &set) {
+		for (auto it1 = set.begin(); it1 != set.end(); ++it1) {
+			for (auto it2 = it1 + 1; it2 != set.end(); ++it2)
 					if (*it2 == *it1)
 						return false;
 		}
 		return true;
 	}
 
+	static unsigned runTask(unsigned int distinct_chars, const std::string &task_input) {
 
-public:
-	static unsigned runTasks(const std::string &taskInput) {
-
-		std::cout << "\n Day 5 - Supply Stacks - Task 1 and 2 \n"
-		          << "--------------------------------------- \n";
-
-		std::ifstream in(taskInput);
+		std::ifstream in(task_input);
 		std::string line;
 		while (getline(in, line)){
-			unsigned N = 13;
-			std::deque<char> msg;
-			for (auto it = line.begin(); it != line.begin() + N; ++it)
-				msg.push_back(*it);
+			std::deque<char> message;
+			for (auto it = line.begin(); it != line.begin() + distinct_chars; ++it)
+				message.push_back(*it);
 
-			//std::deque<char> msg {line[0], line[1], line[2]};
-			for (auto it = line.begin() + N; it != line.end(); ++it) {
-
-				msg.push_back(*it);
-
-				if (isUnique(msg))
-					std::cout << N << '\n';
-
-				msg.pop_front();
-
-				++N;
+			for (auto it = line.begin() + distinct_chars; it != line.end(); ++it) {
+				if (containsUniqueElements(message)) {
+                    std::cout << distinct_chars << "\n";
+                    return 0;
+                }
+				message.push_back(*it);
+				message.pop_front();
+				++distinct_chars;
 			}
-
 		}
-
+        std::cout << "No distinct characters exist";
 		return 0;
 	}
 };

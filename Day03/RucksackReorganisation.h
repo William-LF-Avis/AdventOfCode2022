@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 
-class Day3 {
+class Day03 {
 private:
 
 	static std::vector<char> FindSharedCharacters(const std::string &str1, const std::string &str2) {

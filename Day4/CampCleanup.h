@@ -7,67 +7,50 @@
 #include <fstream>
 #include <regex>
 
-class Day4 {
-private:
-	// size-ordered integer pair
-	class OrderedPair {
-	private:
-		int small_element = 0, large_element = 0;
-	public:
-		void setPair(const int &val1, const int &val2) {
+
+namespace Day4 {
+
+	// Size-ordered integer pair (should be declared const to avoid direct re-assignment)
+	struct OrderedPair {
+		int small_point, large_point;
+
+		explicit OrderedPair(const int &val1, const int &val2) {
 			if (val2 < val1) {
-				small_element = val1;
-				large_element = val1;
+				small_point = val2;
+				large_point = val1;
 			}
 			else {
-				small_element = val1;
-				large_element = val2;
+				small_point = val1;
+				large_point = val2;
 			}
-		}
-		[[nodiscard]] int getSmallInt() const {
-			return small_element;
-		}
-		[[nodiscard]] int getLargeInt() const {
-			return large_element;
-		}
-		[[nodiscard]] bool isEqual() const {
-			if (small_element == large_element)
-				return true;
-			else
-				return false;
 		}
 	};
 
 	// determines if one pair fully encapsulates another (not order dependent, if either fully contains the other it will return true)
 	static bool ContainsPoints(const OrderedPair &pair1, const OrderedPair &pair2)  {
-		if (pair1.getSmallInt() < pair2.getSmallInt()) {
-			if (pair1.getLargeInt() < pair2.getLargeInt())
+		if (pair1.small_point < pair2.small_point) {
+			if (pair1.large_point < pair2.large_point)
 				return false;
 		}
-		else if (pair2.getSmallInt() < pair1.getSmallInt()) {
-			if (pair2.getLargeInt() < pair1.getLargeInt())
+		else if (pair2.small_point < pair1.small_point) {
+			if (pair2.large_point < pair1.large_point)
 				return false;
 		}
 		return true;
 	}
 
 	static bool PointsOverlap(const OrderedPair &pair1, const OrderedPair &pair2) {
-		if (pair1.getLargeInt() < pair2.getSmallInt())
+		if (pair1.large_point < pair2.small_point)
 			return false;
-		else if (pair2.getLargeInt() < pair1.getSmallInt())
+		else if (pair2.large_point < pair1.small_point)
 			return false;
 		return true;
 	}
 
 
-public:
-	static int Task1(const std::string &location) {
+	static int runTasks(const std::string &location) {
 
-		std::cout << std::endl
-		          << "Day 4 - Camp Cleanup - Task 1" << '\n'
-		          << "-----------------------------" << '\n';
-
-		unsigned int overlaps = 0, pair_num = 1;
+		unsigned int overlaps_part1 = 0, overlaps_part2 = 0, pair_num = 1;
 		std::string line;
 		std::ifstream in(location);
 		std::regex regx("[-,]");
@@ -77,66 +60,23 @@ public:
 			std::sregex_token_iterator first{line.begin(), line.end(), regx, -1}, last;
 			std::vector<std::string> tokens{first, last};
 
-			if (tokens.size() == 4) {
-				OrderedPair pair1, pair2;
-				pair1.setPair(std::stoi(tokens[0]), std::stoi(tokens[1]) );
-				pair2.setPair(std::stoi(tokens[2]), std::stoi(tokens[3]) );
-				overlaps += int( ContainsPoints(pair1, pair2) );
-				/*std::cout << pair1.getSmallInt() << " - " << pair1.getLargeInt()
-				          << " : "
-				          << pair2.getSmallInt() << " - " << pair2.getLargeInt()
-				          << " :: " << overlaps << std::endl; */
-			}
-			else {
+			if (tokens.size() != 4) {
 				std::cout << "ERROR" << std::endl;
+				return -1;
 			}
+
+			const OrderedPair pair1(std::stoi(tokens[0]), std::stoi(tokens[1])),
+						      pair2(std::stoi(tokens[2]), std::stoi(tokens[3]));
+			overlaps_part1 += int( ContainsPoints(pair1, pair2) );
+			overlaps_part2 += int( PointsOverlap(pair1, pair2) );
 
 			++pair_num;
 		}
-		std::cout << "There are " << overlaps
+		std::cout << "There are " << overlaps_part1
 				  << " assignment pairs where one range fully contains the other." << std::endl;
-
-		return 0;
-	}
-
-	/*
-	 *
-	 */
-	static int Task2(const std::string &location) {
-
-		std::cout << std::endl
-		          << "Day 4 - Camp Cleanup - Task 2" << '\n'
-		          << "-----------------------------" << '\n';
-
-		unsigned int overlaps = 0, pair_num = 1;
-		std::string line;
-		std::ifstream in(location);
-		while (getline(in, line)) {
-
-			std::regex regx("[-,]");
-			//the '-1' is what makes the regex split (-1 := what was not matched)
-			std::sregex_token_iterator first{line.begin(), line.end(), regx, -1}, last;
-			std::vector<std::string> tokens{first, last};
-
-			if (tokens.size() == 4) {
-				OrderedPair pair1, pair2;
-				pair1.setPair(std::stoi(tokens[0]), std::stoi(tokens[1]) );
-				pair2.setPair(std::stoi(tokens[2]), std::stoi(tokens[3]) );
-				overlaps += int( PointsOverlap(pair1, pair2) );
-				/*std::cout << pair1.getSmallInt() << " - " << pair1.getLargeInt()
-				          << " : "
-				          << pair2.getSmallInt() << " - " << pair2.getLargeInt()
-				          << " :: " << overlaps << std::endl; */
-			}
-			else {
-				std::cout << "ERROR" << std::endl;
-			}
-
-			++pair_num;
-		}
-
-		std::cout << "There are " << overlaps
+		std::cout << "There are " << overlaps_part2
 		          << " assignment pairs where the ranges overlap." << std::endl;
+
 		return 0;
 	}
 

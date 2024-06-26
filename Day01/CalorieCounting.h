@@ -11,7 +11,7 @@ struct Elves {
 	unsigned int id = 0, calories = 0;
 };
 
-class Day1 {
+class Day01 {
 private:
 
 // Find the top elf carrying the most calories from of a list of elves

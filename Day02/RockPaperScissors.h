@@ -7,7 +7,7 @@
 #include <fstream>
 #include <cctype>
 
-class Day2 {
+class Day02 {
 private:
 
 	/*  'inputSet' and 'outputSet' are 1-1 ordered sets, each containing 3 chars.
